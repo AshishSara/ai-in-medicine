@@ -1,0 +1,13 @@
+{
+  "name": "ai-in-medicine",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Western AI in Medicine student club events website",
+  "scripts": {
+    "test": "node --test",
+    "check": "node scripts/check.mjs",
+    "build": "node scripts/build.mjs"
+  },
+  "engines": { "node": ">=22" }
+}
