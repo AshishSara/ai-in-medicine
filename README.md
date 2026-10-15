@@ -1,5 +1,7 @@
 # AI in Medicine · Western
 
+**Live site:** https://ashishsara.github.io/ai-in-medicine/
+
 A small, accessible static site for the student-led AI in Medicine club at Western, serving London and Windsor. Plain HTML, CSS, and JavaScript; no framework, package installation, database, analytics, or API key.
 
 ## Updating events

@@ -100,7 +100,7 @@ async function loadEvents() {
     loaded = true;
     scrollToEvent();
   } catch {
-    upcoming.replaceChildren(element('div', 'empty-state', 'Event listings are temporarily unavailable. Please check @western.aimed on Instagram for current announcements.'));
+    upcoming.replaceChildren(element('p', 'events-message', 'Event listings are temporarily unavailable. Please check @western.aimed on Instagram for current announcements.'));
     upcoming.append(link('Visit @western.aimed ↗', 'https://www.instagram.com/western.aimed/', 'text-link'));
     upcoming.setAttribute('aria-busy', 'false');
     past.replaceChildren(element('p', 'muted', 'The event archive could not be loaded. Please try again later.'));
