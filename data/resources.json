@@ -9,6 +9,15 @@
     "embed": true
   },
   {
+    "id": "still-focus-sounds",
+    "kind": "website",
+    "title": "Focus Sounds",
+    "description": "Configurable background sound from Still, with soundscapes, mix controls and session timers. Press play to start.",
+    "url": "https://ashishsara.github.io/still/",
+    "access": "public",
+    "embed": true
+  },
+  {
     "id": "preclerkship-drive",
     "kind": "drive",
     "title": "Pre-Clerkship Drive",
