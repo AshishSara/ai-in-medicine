@@ -84,7 +84,7 @@ Before sharing a new event, make sure the **Check site** run and GitHub’s **pa
 - `data/resources.json`: verified study websites, NotebookLM, Obsidian, and Drive links, plus curated Drive category shortcuts.
 - `assets/resources.js` and `assets/resources-app.js`: resource validation and rendering.
 
-There are no externally loaded fonts, site analytics, site accounts, or forms. The folder browser loads content directly from Google Drive, subject to Google's behavior and the visitor's browser settings. The header and hero use the user-supplied club logo; no university seal is used. Orchid and white are the accent colors.
+There are no externally loaded fonts, site analytics, site accounts, or forms. The folder browser loads content directly from Google Drive, subject to Google's behavior and the visitor's browser settings. The header uses the user-supplied club logo; no university seal is used. The homepage opens directly with resources. Orchid and white are the accent colors.
 
 Asset URLs use a `?v=` release number to refresh browser caches. When changing CSS or JavaScript, increment the affected version in `index.html` and any changed module import URL. Routine event and resource data edits need no version change; JSON is revalidated on page load.
 

@@ -12,7 +12,7 @@ function element(tag, className, text) {
 function resourceGroup(group) {
   const section = element('section', 'resource-group');
   section.dataset.kind = group.kind;
-  const heading = element('h3', 'resource-group-title', group.title);
+  const heading = element('h2', 'resource-group-title', group.title);
   heading.id = `resources-${group.kind}`;
   section.setAttribute('aria-labelledby', heading.id);
   const embedded = group.resources.filter(resource => resource.collections !== undefined);
@@ -30,7 +30,7 @@ function resourceCards(group) {
     const card = element('a', 'resource-card');
     card.id = `resource-${resource.id}`;
     card.href = resource.url;
-    const cardHeading = element('h4', '', resource.title);
+    const cardHeading = element('h3', '', resource.title);
     cardHeading.id = `resource-title-${resource.id}`;
     card.setAttribute('aria-labelledby', cardHeading.id);
     card.setAttribute('aria-describedby', `resource-description-${resource.id} resource-access-${resource.id}`);
@@ -59,7 +59,7 @@ function driveBrowser(resource) {
   const browser = element('div', 'drive-browser');
   browser.id = `resource-${resource.id}`;
   const intro = element('div', 'drive-intro');
-  const title = element('h4', '', resource.title);
+  const title = element('h3', '', resource.title);
   intro.append(title, element('p', '', resource.description));
   const categories = element('div', 'drive-categories');
   categories.setAttribute('role', 'group');
@@ -68,7 +68,7 @@ function driveBrowser(resource) {
   panel.id = `drive-panel-${resource.id}`;
   const toolbar = element('div', 'drive-toolbar');
   const current = element('div');
-  const currentTitle = element('h5');
+  const currentTitle = element('h4');
   currentTitle.id = `drive-current-${resource.id}`;
   panel.setAttribute('aria-labelledby', currentTitle.id);
   current.append(element('span', 'resource-kind', 'Google Drive folder'), currentTitle);
