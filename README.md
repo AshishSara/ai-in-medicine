@@ -2,7 +2,22 @@
 
 **Live site:** https://ashishsara.github.io/ai-in-medicine/
 
-A small, accessible static site for the student-led AI in Medicine club at Western, serving London and Windsor. Plain HTML, CSS, and JavaScript; no framework, package installation, database, analytics, or API key.
+A small, accessible resource and events site for the student-led AI in Medicine club at Western, serving London and Windsor. Plain HTML, CSS, and JavaScript; no framework, package installation, database, analytics, or API key.
+
+## Updating resources
+
+Edit **`data/resources.json`** to add a verified study resource. Only categories with links appear on the site. Keep unpublished, unverified, or restricted materials out of this public file; the website does not change Google sharing permissions or copy source content.
+
+| Field | Value |
+| --- | --- |
+| `id` | Unique lowercase slug with hyphens. |
+| `kind` | `notebooklm`, `obsidian`, or `drive`. |
+| `title` | Clear notebook, file, folder, or course-block title. |
+| `description` | Short plain-text explanation of what the resource contains. |
+| `url` | Verified HTTPS destination, without embedded credentials or private access tokens. |
+| `access` | `public` for an openly available resource, or `google-sign-in` for a publicly shared resource that requires a Google account. |
+
+Before adding a link, verify that its owner intends it to be shared publicly and that the sharing setting allows the intended audience to open it. A URL visible in your own signed-in account is not sufficient evidence of public sharing. Link to the original Drive folder when appropriate so updates stay in one place. Do not upload Obsidian vaults, course files, or Drive contents to this public repository unless their contents and public distribution have been reviewed and explicitly authorized.
 
 ## Updating events
 
@@ -60,6 +75,8 @@ Before sharing a new event, make sure the **Check site** run and GitHub’s **pa
 - `assets/app.js`: accessible event rendering and actions.
 - `assets/events.js`: validation, event grouping, time formatting, calendar export.
 - `data/events.json`: the only file needed for routine event updates.
+- `data/resources.json`: verified NotebookLM, Obsidian, and Drive links.
+- `assets/resources.js` and `assets/resources-app.js`: resource validation and rendering.
 
 There are no externally loaded fonts, image trackers, accounts, or forms. Illustrations are original decorative SVGs; no university logo or seal is used.
 

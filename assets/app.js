@@ -73,7 +73,7 @@ function scrollToEvent() {
   if (!window.location.hash.startsWith('#event-')) return;
   const target = document.getElementById(window.location.hash.slice(1));
   if (target) { target.scrollIntoView({ block: 'start' }); target.focus({ preventScroll: true }); }
-  else { message.textContent = 'This event link is not in the current listings. Check the upcoming events or our Instagram for updates.'; }
+  else { message.textContent = 'This event link is not in the current listings. Check the upcoming events for current announcements.'; }
 }
 
 function render() {
@@ -100,8 +100,7 @@ async function loadEvents() {
     loaded = true;
     scrollToEvent();
   } catch {
-    upcoming.replaceChildren(element('p', 'events-message', 'Event listings are temporarily unavailable. Please check @western.aimed on Instagram for current announcements.'));
-    upcoming.append(link('Visit @western.aimed ↗', 'https://www.instagram.com/western.aimed/', 'text-link'));
+    upcoming.replaceChildren(element('p', 'events-message', 'Event listings are temporarily unavailable. Please try again later.'));
     upcoming.setAttribute('aria-busy', 'false');
     past.replaceChildren(element('p', 'muted', 'The event archive could not be loaded. Please try again later.'));
   }
