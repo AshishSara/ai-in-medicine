@@ -76,14 +76,15 @@ Before sharing a new event, make sure the **Check site** run and GitHub’s **pa
 ## Editing the design
 
 - `index.html`: club introduction, navigation, and honest empty states.
-- `assets/styles.css`: responsive navy, amber, and warm-paper design.
+- `assets/styles.css`: responsive purple, lavender, orchid, and white design.
+- `assets/club-logo.png`: user-supplied club logo, preserved as provided.
 - `assets/app.js`: accessible event rendering and actions.
 - `assets/events.js`: validation, event grouping, time formatting, calendar export.
 - `data/events.json`: the only file needed for routine event updates.
 - `data/resources.json`: verified study websites, NotebookLM, Obsidian, and Drive links, plus curated Drive category shortcuts.
 - `assets/resources.js` and `assets/resources-app.js`: resource validation and rendering.
 
-There are no externally loaded fonts, site analytics, site accounts, or forms. The folder browser loads content directly from Google Drive, subject to Google's behavior and the visitor's browser settings. Illustrations are original decorative SVGs; no university logo or seal is used.
+There are no externally loaded fonts, site analytics, site accounts, or forms. The folder browser loads content directly from Google Drive, subject to Google's behavior and the visitor's browser settings. The header and hero use the user-supplied club logo; no university seal is used. Orchid and white are the accent colors.
 
 ## Public content sources
 

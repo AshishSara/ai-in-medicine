@@ -1,10 +1,10 @@
 import { isPublicHttps } from './events.js';
 
 export const RESOURCE_TYPES = {
-  website: { title: 'Start with the essentials', label: 'Study website', action: 'Explore the website' },
+  website: { title: 'Study websites', label: 'Study website', action: 'Explore the website' },
   notebooklm: { title: 'NotebookLM notebooks', label: 'NotebookLM', action: 'Open notebook' },
   obsidian: { title: 'Obsidian notes & files', label: 'Obsidian', action: 'Open files' },
-  drive: { title: 'Browse the shared Drive', label: 'Google Drive', action: 'Open in Drive' }
+  drive: { title: 'Shared Drive', label: 'Google Drive', action: 'Open in Drive' }
 };
 
 export function driveFolderId(value) {

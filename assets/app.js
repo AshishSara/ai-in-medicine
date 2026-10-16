@@ -43,8 +43,8 @@ function eventCard(event, isPast) {
   meta.append(time, element('br'), document.createTextNode(event.location));
   body.append(element('span', `event-status${cancelled ? ' cancelled' : ''}`, label), heading, meta, element('p', 'event-description', event.description));
   const actions = element('div', 'event-actions');
-  if (event.registrationUrl && !isPast && !cancelled) actions.append(link('Register ↗', event.registrationUrl, 'button button-navy'));
-  if (isPast && event.resourcesUrl) actions.append(link('Event resources ↗', event.resourcesUrl, 'button button-navy'));
+  if (event.registrationUrl && !isPast && !cancelled) actions.append(link('Register ↗', event.registrationUrl, 'button button-primary'));
+  if (isPast && event.resourcesUrl) actions.append(link('Event resources ↗', event.resourcesUrl, 'button button-primary'));
   actions.append(link('Announcement ↗', event.sourceUrl));
   if (!isPast && !cancelled) {
     const calendar = element('button', '', 'Add to calendar');
