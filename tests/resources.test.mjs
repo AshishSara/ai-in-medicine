@@ -25,6 +25,14 @@ test('resource IDs remain unique and category order is predictable', () => {
   assert.deepEqual(groupResources([fixture({ id: 'drive', kind: 'drive' }), fixture({ id: 'notes', kind: 'obsidian' }), fixture()]).map(group => group.kind), ['notebooklm', 'obsidian', 'drive']);
 });
 
+test('website previews require explicit public website opt-in', () => {
+  const website = fixture({ kind: 'website', access: 'public', embed: true });
+  assert.doesNotThrow(() => validateResources([website]));
+  assert.doesNotThrow(() => validateResources([{ ...website, embed: false }]));
+  assert.equal(groupResources([fixture({ kind: 'website', access: 'public' })])[0].resources[0].embed, undefined);
+  for (const change of [{ embed: 'true' }, { embed: null }, { kind: 'notebooklm' }, { access: 'google-sign-in' }]) assert.throws(() => validateResources([{ ...website, ...change }]));
+});
+
 test('Drive embeds accept only canonical HTTPS Google Drive folder links', () => {
   const url = 'https://drive.google.com/drive/folders/test-folder_1?usp=sharing';
   assert.equal(driveFolderId(url), 'test-folder_1');

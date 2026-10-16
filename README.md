@@ -16,6 +16,7 @@ Edit **`data/resources.json`** to add a verified study resource whose link is au
 | `description` | Short plain-text explanation of what the resource contains. |
 | `url` | Verified HTTPS destination, without embedded credentials or private access tokens. |
 | `access` | `public` for an openly available resource; `google-sign-in` when a Google account is required; `drive-permissions` for a Drive folder whose owner controls access to individual files. |
+| `embed` | Optional boolean for a public `website` resource. Set to `true` only after verifying that the site permits framing and its preview works. Omit or set to `false` for a direct link without a preview. |
 | `collections` | Optional array for a `drive` folder. Each entry has `id`, `title`, `description`, and a verified Google Drive folder `url`. IDs must be unique; `all` is reserved for the root folder. An empty array still enables the root folder browser. |
 
 Before adding a link, verify that publishing the link is authorized and that its access label is accurate. A URL visible in your signed-in account alone is not evidence of anonymous access. Do not upload Obsidian vaults, course files, or Drive contents to this public repository unless their contents and public distribution have been reviewed and explicitly authorized.
@@ -23,6 +24,8 @@ Before adding a link, verify that publishing the link is authorized and that its
 The Preclerkship Drive browser displays Google's `embeddedfolderview` for the selected folder. The **All resources**, **Year 1**, **Year 2**, and **Clinical Skills** shortcuts were verified against the approved folder. These shortcut names and destinations are a manually maintained index, not an automatically synchronized folder tree. Each embedded folder listing is fetched from Google when loaded; file and subfolder links open Google Drive. The site does not mirror files, authenticate visitors, or maintain a cached file inventory.
 
 The **Open in Drive** link always points to the selected folder and remains available if embedding is blocked or a visitor needs to sign in. Individual file access remains controlled by the owner. Google content is cross-origin, so the site does not pretend to detect whether every visitor has access or whether an embedded listing loaded successfully. The two main destinations are also available with JavaScript disabled.
+
+**Study Website** uses the same section heading and white layout as **Pre-Clerkship Drive**. Its compact, scrollable preview loads the original website in a titled, lazy-loaded iframe. **Explore the website** opens the full site in a new tab and remains available if the external preview cannot load. Website content is not copied into this repository, and the preview follows the source site's own theme and updates. The sandbox allows normal study-page scripts, forms, downloads, and user-opened links while blocking navigation of the club page by the embedded site.
 
 ## Updating events
 

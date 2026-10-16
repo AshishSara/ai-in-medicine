@@ -33,7 +33,7 @@ export function validateResources(resources) {
   const ids = new Set();
   for (const resource of resources) {
     if (!resource || typeof resource !== 'object' || Array.isArray(resource)) throw new Error('Each resource must be an object.');
-    if (Object.keys(resource).some(key => ![...fields, 'collections'].includes(key))) throw new Error('Only public resource fields may be included.');
+    if (Object.keys(resource).some(key => ![...fields, 'collections', 'embed'].includes(key))) throw new Error('Only public resource fields may be included.');
     if (fields.some(key => typeof resource[key] !== 'string' || !resource[key].trim())) throw new Error('Every resource needs an ID, type, title, description, URL, and access label.');
     if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(resource.id) || ids.has(resource.id)) throw new Error('Resource IDs must be unique lowercase slugs.');
     ids.add(resource.id);
@@ -41,6 +41,7 @@ export function validateResources(resources) {
     if (!isPublicHttps(resource.url)) throw new Error('Resource links must use HTTPS without embedded credentials.');
     if (!['public', 'google-sign-in', 'drive-permissions'].includes(resource.access)) throw new Error('Resources need an accurate access label.');
     if (resource.access === 'drive-permissions' && resource.kind !== 'drive') throw new Error('Drive access labels apply only to Drive resources.');
+    if (resource.embed !== undefined && (typeof resource.embed !== 'boolean' || resource.kind !== 'website' || resource.access !== 'public')) throw new Error('Website previews require a boolean embed setting on a public website resource.');
     if (resource.collections !== undefined) {
       if (resource.kind !== 'drive' || !driveFolderId(resource.url) || !Array.isArray(resource.collections)) throw new Error('Collections require a Google Drive folder.');
       const collectionIds = new Set(['all']);

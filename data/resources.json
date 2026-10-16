@@ -5,7 +5,8 @@
     "title": "Study Website",
     "description": "Lecture notes and practice questions organized by course block, from Foundations of Medicine through Transition to Clerkship.",
     "url": "https://schulichmed.github.io/preclerkship/",
-    "access": "public"
+    "access": "public",
+    "embed": true
   },
   {
     "id": "preclerkship-drive",

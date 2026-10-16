@@ -1,4 +1,4 @@
-import { driveCollections, driveEmbedUrl, groupResources } from './resources.js?v=2';
+import { driveCollections, driveEmbedUrl, groupResources } from './resources.js?v=3';
 
 const library = document.querySelector('#resource-library');
 
@@ -10,20 +10,52 @@ function element(tag, className, text) {
 }
 
 function resourceGroup(group) {
-  const isWebsite = group.kind === 'website';
-  const section = element(isWebsite ? 'div' : 'section', 'resource-group');
+  if (group.kind === 'website') {
+    const websites = element('div', 'resource-group');
+    websites.dataset.kind = group.kind;
+    websites.append(...group.resources.map(websitePreview));
+    return websites;
+  }
+  const section = element('section', 'resource-group');
   section.dataset.kind = group.kind;
   const embedded = group.resources.filter(resource => resource.collections !== undefined);
   const linked = group.resources.filter(resource => resource.collections === undefined);
   const singleDrive = group.kind === 'drive' && embedded.length === 1 && linked.length === 0;
-  if (!isWebsite) {
-    const heading = element('h2', 'resource-group-title', singleDrive ? embedded[0].title : group.title);
-    heading.id = `resources-${group.kind}`;
-    section.setAttribute('aria-labelledby', heading.id);
-    section.append(heading);
-  }
+  const heading = element('h2', 'resource-group-title', singleDrive ? embedded[0].title : group.title);
+  heading.id = `resources-${group.kind}`;
+  section.setAttribute('aria-labelledby', heading.id);
+  section.append(heading);
   if (linked.length) section.append(resourceCards({ ...group, resources: linked }));
   section.append(...embedded.map(resource => driveBrowser(resource, !singleDrive)));
+  return section;
+}
+
+function websitePreview(resource) {
+  const section = element('section', 'website-resource');
+  section.id = `resource-${resource.id}`;
+  const heading = element('h2', 'resource-group-title', resource.title);
+  heading.id = `resource-title-${resource.id}`;
+  section.setAttribute('aria-labelledby', heading.id);
+  const intro = element('div', 'website-intro');
+  const description = element('p', '', resource.description);
+  const open = element('a', 'text-link', 'Explore the website ↗');
+  open.href = resource.url;
+  open.target = '_blank';
+  open.rel = 'noopener noreferrer';
+  open.append(element('span', 'sr-only', ' (opens in a new tab)'));
+  intro.append(description, open);
+  section.append(heading, intro);
+  if (resource.embed) {
+    const panel = element('div', 'website-preview');
+    const frame = element('iframe', 'website-frame');
+    frame.title = `${resource.title} preview`;
+    frame.src = resource.url;
+    frame.loading = 'lazy';
+    frame.referrerPolicy = 'no-referrer';
+    frame.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-downloads');
+    panel.append(frame);
+    section.append(panel);
+  }
   return section;
 }
 
@@ -34,7 +66,7 @@ function resourceCards(group) {
     const card = element('a', 'resource-card');
     card.id = `resource-${resource.id}`;
     card.href = resource.url;
-    const cardHeading = element(group.kind === 'website' ? 'h2' : 'h3', 'resource-card-title', resource.title);
+    const cardHeading = element('h3', 'resource-card-title', resource.title);
     cardHeading.id = `resource-title-${resource.id}`;
     card.setAttribute('aria-labelledby', cardHeading.id);
     card.setAttribute('aria-describedby', `resource-description-${resource.id} resource-access-${resource.id}`);
@@ -45,14 +77,7 @@ function resourceCards(group) {
     access.id = `resource-access-${resource.id}`;
     const description = element('p', '', resource.description);
     description.id = `resource-description-${resource.id}`;
-    if (group.kind === 'website') {
-      card.classList.add('resource-card-feature');
-      const copy = element('div');
-      copy.append(cardHeading, description);
-      const tail = element('div', 'resource-card-tail');
-      tail.append(action, access);
-      card.append(copy, tail);
-    } else card.append(meta, cardHeading, description, action, access);
+    card.append(meta, cardHeading, description, action, access);
     item.append(card);
     list.append(item);
   }
