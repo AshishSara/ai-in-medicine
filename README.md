@@ -86,6 +86,8 @@ Before sharing a new event, make sure the **Check site** run and GitHub’s **pa
 
 There are no externally loaded fonts, site analytics, site accounts, or forms. The folder browser loads content directly from Google Drive, subject to Google's behavior and the visitor's browser settings. The header and hero use the user-supplied club logo; no university seal is used. Orchid and white are the accent colors.
 
+Asset URLs use a `?v=` release number to refresh browser caches. When changing CSS or JavaScript, increment the affected version in `index.html` and any changed module import URL. Routine event and resource data edits need no version change; JSON is revalidated on page load.
+
 ## Public content sources
 
 - [Schulich Hippocratic Council club directory](https://uwomeds.com/clubs_directory/ai-in-medicine/): club identity, London and Windsor campuses, balanced exploration of AI across specialties. Older officer details are deliberately omitted.

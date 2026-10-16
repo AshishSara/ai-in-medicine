@@ -1,4 +1,4 @@
-import { driveCollections, driveEmbedUrl, groupResources } from './resources.js';
+import { driveCollections, driveEmbedUrl, groupResources } from './resources.js?v=2';
 
 const library = document.querySelector('#resource-library');
 
