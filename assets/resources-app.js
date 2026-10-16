@@ -10,16 +10,20 @@ function element(tag, className, text) {
 }
 
 function resourceGroup(group) {
-  const section = element('section', 'resource-group');
+  const isWebsite = group.kind === 'website';
+  const section = element(isWebsite ? 'div' : 'section', 'resource-group');
   section.dataset.kind = group.kind;
-  const heading = element('h2', 'resource-group-title', group.title);
-  heading.id = `resources-${group.kind}`;
-  section.setAttribute('aria-labelledby', heading.id);
   const embedded = group.resources.filter(resource => resource.collections !== undefined);
   const linked = group.resources.filter(resource => resource.collections === undefined);
-  section.append(heading);
+  const singleDrive = group.kind === 'drive' && embedded.length === 1 && linked.length === 0;
+  if (!isWebsite) {
+    const heading = element('h2', 'resource-group-title', singleDrive ? embedded[0].title : group.title);
+    heading.id = `resources-${group.kind}`;
+    section.setAttribute('aria-labelledby', heading.id);
+    section.append(heading);
+  }
   if (linked.length) section.append(resourceCards({ ...group, resources: linked }));
-  section.append(...embedded.map(driveBrowser));
+  section.append(...embedded.map(resource => driveBrowser(resource, !singleDrive)));
   return section;
 }
 
@@ -30,7 +34,7 @@ function resourceCards(group) {
     const card = element('a', 'resource-card');
     card.id = `resource-${resource.id}`;
     card.href = resource.url;
-    const cardHeading = element('h3', '', resource.title);
+    const cardHeading = element(group.kind === 'website' ? 'h2' : 'h3', 'resource-card-title', resource.title);
     cardHeading.id = `resource-title-${resource.id}`;
     card.setAttribute('aria-labelledby', cardHeading.id);
     card.setAttribute('aria-describedby', `resource-description-${resource.id} resource-access-${resource.id}`);
@@ -44,7 +48,7 @@ function resourceCards(group) {
     if (group.kind === 'website') {
       card.classList.add('resource-card-feature');
       const copy = element('div');
-      copy.append(meta, cardHeading, description);
+      copy.append(cardHeading, description);
       const tail = element('div', 'resource-card-tail');
       tail.append(action, access);
       card.append(copy, tail);
@@ -55,12 +59,12 @@ function resourceCards(group) {
   return list;
 }
 
-function driveBrowser(resource) {
+function driveBrowser(resource, includeTitle = true) {
   const browser = element('div', 'drive-browser');
   browser.id = `resource-${resource.id}`;
   const intro = element('div', 'drive-intro');
-  const title = element('h3', '', resource.title);
-  intro.append(title, element('p', '', resource.description));
+  if (includeTitle) intro.append(element('h3', '', resource.title));
+  intro.append(element('p', '', resource.description));
   const categories = element('div', 'drive-categories');
   categories.setAttribute('role', 'group');
   categories.setAttribute('aria-label', `${resource.title} categories`);
@@ -68,7 +72,7 @@ function driveBrowser(resource) {
   panel.id = `drive-panel-${resource.id}`;
   const toolbar = element('div', 'drive-toolbar');
   const current = element('div');
-  const currentTitle = element('h4');
+  const currentTitle = element(includeTitle ? 'h4' : 'h3', 'drive-current-title');
   currentTitle.id = `drive-current-${resource.id}`;
   panel.setAttribute('aria-labelledby', currentTitle.id);
   current.append(element('span', 'resource-kind', 'Google Drive folder'), currentTitle);
