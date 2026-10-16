@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { groupResources, validateResources } from '../assets/resources.js';
+import { driveCollections, driveEmbedUrl, driveFolderId, groupResources, validateResources } from '../assets/resources.js';
 
 const fixture = (overrides = {}) => ({ id: 'test-resource', kind: 'notebooklm', title: 'Test resource', description: 'Synthetic test input.', url: 'https://example.org/resource', access: 'google-sign-in', ...overrides });
 
@@ -23,4 +23,23 @@ test('unsafe URLs, restricted access, and unknown fields are rejected', () => {
 test('resource IDs remain unique and category order is predictable', () => {
   assert.throws(() => validateResources([fixture(), fixture()]));
   assert.deepEqual(groupResources([fixture({ id: 'drive', kind: 'drive' }), fixture({ id: 'notes', kind: 'obsidian' }), fixture()]).map(group => group.kind), ['notebooklm', 'obsidian', 'drive']);
+});
+
+test('Drive embeds accept only canonical HTTPS Google Drive folder links', () => {
+  const url = 'https://drive.google.com/drive/folders/test-folder_1?usp=sharing';
+  assert.equal(driveFolderId(url), 'test-folder_1');
+  assert.equal(driveEmbedUrl(url), 'https://drive.google.com/embeddedfolderview?id=test-folder_1#list');
+  for (const bad of ['https://drive.google.com.evil.test/drive/folders/a', 'http://drive.google.com/drive/folders/a', 'https://user:secret@drive.google.com/drive/folders/a', 'https://drive.google.com/file/d/a/view', 'https://drive.google.com:8443/drive/folders/a', 'javascript:alert(1)']) {
+    assert.equal(driveFolderId(bad), null);
+    assert.throws(() => driveEmbedUrl(bad));
+  }
+});
+
+test('Drive collections validate and keep the root fallback URL intact', () => {
+  const folder = fixture({ kind: 'drive', url: 'https://drive.google.com/drive/folders/root-folder?usp=sharing', access: 'drive-permissions', collections: [{ id: 'year-1', title: 'Year 1', description: 'First-year materials', url: 'https://drive.google.com/drive/folders/year-1' }] });
+  validateResources([folder]);
+  assert.deepEqual(driveCollections(folder).map(collection => collection.id), ['all', 'year-1']);
+  assert.equal(driveCollections(folder)[0].url, folder.url);
+  for (const collections of [null, {}, [{ ...folder.collections[0], id: 'all' }], [folder.collections[0], folder.collections[0]], [{ ...folder.collections[0], url: 'https://example.org' }], [{ ...folder.collections[0], privateNotes: 'private' }]]) assert.throws(() => validateResources([{ ...folder, collections }]));
+  assert.throws(() => validateResources([{ ...folder, kind: 'website' }]));
 });

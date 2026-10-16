@@ -6,18 +6,23 @@ A small, accessible resource and events site for the student-led AI in Medicine 
 
 ## Updating resources
 
-Edit **`data/resources.json`** to add a verified study resource. Only categories with links appear on the site. Keep unpublished, unverified, or restricted materials out of this public file; the website does not change Google sharing permissions or copy source content.
+Edit **`data/resources.json`** to add a verified study resource whose link is authorized for this public site. Only categories with links appear. Keep private notes and source contents out of this public file; the website does not change Google sharing permissions or copy course materials.
 
 | Field | Value |
 | --- | --- |
 | `id` | Unique lowercase slug with hyphens. |
-| `kind` | `notebooklm`, `obsidian`, or `drive`. |
+| `kind` | `website`, `notebooklm`, `obsidian`, or `drive`. |
 | `title` | Clear notebook, file, folder, or course-block title. |
 | `description` | Short plain-text explanation of what the resource contains. |
 | `url` | Verified HTTPS destination, without embedded credentials or private access tokens. |
-| `access` | `public` for an openly available resource, or `google-sign-in` for a publicly shared resource that requires a Google account. |
+| `access` | `public` for an openly available resource; `google-sign-in` when a Google account is required; `drive-permissions` for a Drive folder whose owner controls access to individual files. |
+| `collections` | Optional array for a `drive` folder. Each entry has `id`, `title`, `description`, and a verified Google Drive folder `url`. IDs must be unique; `all` is reserved for the root folder. An empty array still enables the root folder browser. |
 
-Before adding a link, verify that its owner intends it to be shared publicly and that the sharing setting allows the intended audience to open it. A URL visible in your own signed-in account is not sufficient evidence of public sharing. Link to the original Drive folder when appropriate so updates stay in one place. Do not upload Obsidian vaults, course files, or Drive contents to this public repository unless their contents and public distribution have been reviewed and explicitly authorized.
+Before adding a link, verify that publishing the link is authorized and that its access label is accurate. A URL visible in your signed-in account alone is not evidence of anonymous access. Do not upload Obsidian vaults, course files, or Drive contents to this public repository unless their contents and public distribution have been reviewed and explicitly authorized.
+
+The Preclerkship Drive browser displays Google's `embeddedfolderview` for the selected folder. The **All resources**, **Year 1**, **Year 2**, and **Clinical Skills** shortcuts were verified against the approved folder. These shortcut names and destinations are a manually maintained index, not an automatically synchronized folder tree. Each embedded folder listing is fetched from Google when loaded; file and subfolder links open Google Drive. The site does not mirror files, authenticate visitors, or maintain a cached file inventory.
+
+The **Open in Drive** link always points to the selected folder and remains available if embedding is blocked or a visitor needs to sign in. Individual file access remains controlled by the owner. Google content is cross-origin, so the site does not pretend to detect whether every visitor has access or whether an embedded listing loaded successfully. The two main destinations are also available with JavaScript disabled.
 
 ## Updating events
 
@@ -75,14 +80,16 @@ Before sharing a new event, make sure the **Check site** run and GitHub’s **pa
 - `assets/app.js`: accessible event rendering and actions.
 - `assets/events.js`: validation, event grouping, time formatting, calendar export.
 - `data/events.json`: the only file needed for routine event updates.
-- `data/resources.json`: verified NotebookLM, Obsidian, and Drive links.
+- `data/resources.json`: verified study websites, NotebookLM, Obsidian, and Drive links, plus curated Drive category shortcuts.
 - `assets/resources.js` and `assets/resources-app.js`: resource validation and rendering.
 
-There are no externally loaded fonts, image trackers, accounts, or forms. Illustrations are original decorative SVGs; no university logo or seal is used.
+There are no externally loaded fonts, site analytics, site accounts, or forms. The folder browser loads content directly from Google Drive, subject to Google's behavior and the visitor's browser settings. Illustrations are original decorative SVGs; no university logo or seal is used.
 
 ## Public content sources
 
 - [Schulich Hippocratic Council club directory](https://uwomeds.com/clubs_directory/ai-in-medicine/): club identity, London and Windsor campuses, balanced exploration of AI across specialties. Older officer details are deliberately omitted.
 - [@western.aimed on Instagram](https://www.instagram.com/western.aimed/): verified public club identity and updates.
+- [Schulich Pre-clerkship](https://schulichmed.github.io/preclerkship/): verified title and course-block notes/practice-question portal.
+- [Preclerkship Drive](https://drive.google.com/drive/folders/1Dn4awPOxOo0gqo8yoCTwYPSEZkyJxXqh?usp=sharing): user-approved folder display and verified Year 1, Year 2, and Clinical Skills shortcuts. Files remain in Drive.
 
 No confirmed public upcoming or past event was available at launch, so the event data starts empty.

@@ -1,1 +1,38 @@
-[]
+[
+  {
+    "id": "schulich-preclerkship",
+    "kind": "website",
+    "title": "Schulich Pre-clerkship",
+    "description": "Lecture notes and practice questions organized by course block, from Foundations of Medicine through Transition to Clerkship.",
+    "url": "https://schulichmed.github.io/preclerkship/",
+    "access": "public"
+  },
+  {
+    "id": "preclerkship-drive",
+    "kind": "drive",
+    "title": "Preclerkship Drive",
+    "description": "Choose a collection to browse below. Files stay in Google Drive and follow the owner’s sharing settings.",
+    "url": "https://drive.google.com/drive/folders/1Dn4awPOxOo0gqo8yoCTwYPSEZkyJxXqh?usp=sharing",
+    "access": "drive-permissions",
+    "collections": [
+      {
+        "id": "year-1",
+        "title": "Year 1",
+        "description": "First-year materials",
+        "url": "https://drive.google.com/drive/folders/1Q0dTrUekp2-5KJS35d25hSxK1if4VATo"
+      },
+      {
+        "id": "year-2",
+        "title": "Year 2",
+        "description": "Second-year materials",
+        "url": "https://drive.google.com/drive/folders/1HVpZM8VreUQh2wwr5viuOd_HKRDgupjc"
+      },
+      {
+        "id": "clinical-skills",
+        "title": "Clinical Skills",
+        "description": "Clinical skills materials",
+        "url": "https://drive.google.com/drive/folders/1znTc-y5bZRdEaY3F0rzZzakUvxiwRH_r"
+      }
+    ]
+  }
+]
